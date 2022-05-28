@@ -105,9 +105,11 @@
     <ClCompile Include="util.cpp" />
     <ClCompile Include="volunteermanagementsystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="README.md" />
     <None Include="sqlite3.def" />
     <None Include="sqlite3.dll" />
     <None Include="sqlite3.exp" />
+    <None Include="volunteer.db" />
     <None Include="volunteerManagementSystem.ico" />
     <ResourceCompile Include="volunteerManagementSystem.rc" />
     <ClInclude Include="core.h" />

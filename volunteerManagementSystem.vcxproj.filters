@@ -24,6 +24,9 @@
     <Filter Include="sqlite3">
       <UniqueIdentifier>{d937273f-08a9-45b6-abd6-9f2ddf75f2d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="others">
+      <UniqueIdentifier>{2bb70c2e-b3ec-401b-b2db-b1747f95b4f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="volunteermanagementsystem.qrc">
@@ -77,6 +80,12 @@
     </None>
     <None Include="sqlite3.exp">
       <Filter>sqlite3</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>others</Filter>
+    </None>
+    <None Include="volunteer.db">
+      <Filter>others</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

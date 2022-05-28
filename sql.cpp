@@ -59,7 +59,8 @@ void sqlOperator(string sql)
 */
 
 //从数据库中读取所有的事程，并返回一个动态数组
-EventVec getAllEvent()
+
+EventVec getAllEvents()
 {
 	EventVec ev;
 	sqlite3 *db;
@@ -90,9 +91,9 @@ EventVec getAllEvent()
 		e.time.start = sqlite3_column_int(stmt, 3);
 		e.time.end = sqlite3_column_int(stmt, 4);
 		e.needVtrsNum = sqlite3_column_int(stmt, 5);
-		string sql2="select vtrId from event_vtrs where eventId="+to_string(e.id);
+		string sql2="select vtrId from Event_Vtrs where eventId="+to_string(e.id);
 		sqlite3_stmt *stmt2;
-		rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt2, NULL);
+		rc = sqlite3_prepare_v2(db, sql2.c_str(), -1, &stmt2, NULL);
 		if (rc != SQLITE_OK)
 		{
 			cout << "SQL error: " << sqlite3_errmsg(db) << endl;
@@ -102,9 +103,10 @@ EventVec getAllEvent()
 		int i = 0;
 		while(sqlite3_step(stmt2) == SQLITE_ROW)
 		{
-			e.vtrs[i] = sqlite3_column_int(stmt, 0);
+			e.vtrs[i] = sqlite3_column_int(stmt2, 0);
 			i++;
 		}
+		sqlite3_finalize(stmt2);
 		for (; i < MAX_NEEDED_VTRS; i++) 
 		{
 			e.vtrs[i] = -1;
@@ -144,8 +146,8 @@ VtrVec getAllVtrs()
 		Volunteer v;
 		v.id = sqlite3_column_int(stmt, 0);
 		v.name = (char*)sqlite3_column_text(stmt, 1);
-		v.gender = (char*)sqlite3_column_text(stmt, 2);
-		v.age = sqlite3_column_int(stmt, 3);
+		v.age = sqlite3_column_int(stmt, 2);
+		v.gender = (char*)sqlite3_column_text(stmt, 3);
 		v.telephone = (char*)sqlite3_column_text(stmt, 4);
 		v.idCard = (char*)sqlite3_column_text(stmt, 5);
 		v.profile =(char*)sqlite3_column_text(stmt, 6);
@@ -153,8 +155,8 @@ VtrVec getAllVtrs()
 		int value=sqlite3_column_int(stmt, 8);
 		for (int i = 0; i < LANG_NUM; i++)
 		{
-			v.langCommand[i] = value & 1 ? true : false;
-			value >> 1;
+			v.langCommand[i] = value%2==1 ? true : false;
+			value/=2;
 		}
 		char* timeStr = (char*)sqlite3_column_text(stmt, 9);
 		vector<string> vs = split(timeStr,",");
@@ -164,7 +166,7 @@ VtrVec getAllVtrs()
 			v.availTime[i][0] = stoi(vs1[0]);
 			v.availTime[i][1] = stoi(vs1[1]);
 		}
-		string sql2= "select eventId from event_vtrs where vtrId=" + to_string(v.id);
+		string sql2= "select eventId from Event_Vtrs where vtrId=" + to_string(v.id);
 		sqlite3_stmt* stmt2;
 		rc = sqlite3_prepare_v2(db, sql2.c_str(), -1, &stmt2, NULL);
 		if (rc != SQLITE_OK)

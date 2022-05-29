@@ -1,21 +1,15 @@
-#include "volunteermanagementsystem.h"
-#include "stdafx.h"
-#include <QtWidgets/QApplication>
-#include <QPushButton>
-#include <QLabel>
-#include <QVBoxLayout>
-#include "sql.h"
-#include "core.h"
-#include "util.h"
-int main(int argc, char *argv[])
+#include "../sql/sql.h"
+#include "./core/core.h"
+#include "./util/util.h"
+#include "./gui/loginUI/loginui.h"
+#include "./gui/SignUp/signup.h"
+#include<QApplication>
+
+int main(int argc, char* argv[])
 {
-    VtrVec vv=getAllVtrs();
-	EventVec ev=getAllEvents();
-    QApplication a(argc, argv);
-    volunteerManagementSystem w;
-    w.resize(2000, 1500);
-    w.setWindowTitle("亚运会志愿者管理系统");
-    QVBoxLayout layout(&w);
-    w.show();
-    return a.exec();
+	VtrVec vv = getAllVtrs();
+	QApplication app(argc, argv);
+	loginUI login;
+	login.show();
+	return app.exec();
 }

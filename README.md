@@ -4,6 +4,10 @@
 
 ## 1.技术栈、使用工具
 
+技术栈 QT5  C++ sqlite3
+
+visual studio
+
 ## 2.结构介绍
 
 ```mermaid

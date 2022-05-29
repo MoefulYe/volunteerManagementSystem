@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>loginUI</class>
+ <widget class="QMainWindow" name="loginUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>亚运会志愿者管理系统</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="signupButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>160</y>
+      <width>131</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>注册</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditAccount">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>300</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>宋体</family>
+     </font>
+    </property>
+    <property name="placeholderText">
+     <string>请输入账号...</string>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditPasswd">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>100</y>
+      <width>300</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+    <property name="placeholderText">
+     <string>请输入密码...</string>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="signinButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>160</y>
+      <width>131</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>登录</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>500</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>signupButton</sender>
+   <signal>clicked()</signal>
+   <receiver>loginUI</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

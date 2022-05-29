@@ -1,7 +1,7 @@
-#include "sqlite3.h"
+#include "../sqlite3/sqlite3.h"
 #include "sql.h"
-#include "core.h"
-#include "util.h"
+#include "../core/core.h"
+#include "../util/util.h"
 #include <iostream>
 #include<vector>
 constexpr auto SQL_PATH = "./volunteer.db";
@@ -146,8 +146,8 @@ VtrVec getAllVtrs()
 		Volunteer v;
 		v.id = sqlite3_column_int(stmt, 0);
 		v.name = (char*)sqlite3_column_text(stmt, 1);
-		v.age = sqlite3_column_int(stmt, 2);
-		v.gender = (char*)sqlite3_column_text(stmt, 3);
+		v.gender =(char*) sqlite3_column_text(stmt, 2);
+		v.age = sqlite3_column_int(stmt, 3);
 		v.telephone = (char*)sqlite3_column_text(stmt, 4);
 		v.idCard = (char*)sqlite3_column_text(stmt, 5);
 		v.profile =(char*)sqlite3_column_text(stmt, 6);
@@ -155,8 +155,8 @@ VtrVec getAllVtrs()
 		int value=sqlite3_column_int(stmt, 8);
 		for (int i = 0; i < LANG_NUM; i++)
 		{
-			v.langCommand[i] = value%2==1 ? true : false;
-			value/=2;
+			v.langCommand[LANG_NUM-i] = value & 1 ? true : false;
+			value >>= 1;
 		}
 		char* timeStr = (char*)sqlite3_column_text(stmt, 9);
 		vector<string> vs = split(timeStr,",");
@@ -166,6 +166,7 @@ VtrVec getAllVtrs()
 			v.availTime[i][0] = stoi(vs1[0]);
 			v.availTime[i][1] = stoi(vs1[1]);
 		}
+		v.passwd = (char*)sqlite3_column_text(stmt, 10);
 		string sql2= "select eventId from Event_Vtrs where vtrId=" + to_string(v.id);
 		sqlite3_stmt* stmt2;
 		rc = sqlite3_prepare_v2(db, sql2.c_str(), -1, &stmt2, NULL);

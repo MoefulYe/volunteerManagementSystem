@@ -6,7 +6,7 @@
 #pragma once
 #ifndef SQL_INCLUDED
 #define SQL_INCLUDED
-#include "core.h"
+#include "../core/core.h"
 void sqlOperator(string sql);
 VtrVec getAllVtrs();
 EventVec getAllEvents();

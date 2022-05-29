@@ -62,6 +62,7 @@ public:
 	//在数据库里以"8-22,9-22,10-22,...."五个连续以','分割的一对数值表示
 	//0-0表示当天没空
 	int availTime[DAYS_NUM][2];
+	string passwd;
 	int result[MAX_ATTEND_EVENT];
 	bool available(Event& e);
 	vector<string> deleteSql();

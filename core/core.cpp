@@ -78,7 +78,8 @@ string Volunteer::insertSql()
     s += "'" + this->profile + "',";
     s += to_string(this->hasExp ? 1 : 0) + ",";
     s += to_string(this->getLangCode()) + ",";
-    s += "'" + this->toTimeStr(), "')";
+    s += "'" + this->toTimeStr()+"',";
+    s += "'" + this->passwd + "')";
     return s;
 }
 
@@ -93,7 +94,8 @@ string Volunteer::updateSql()
     s += "`profile`='" + this->profile + "',";
     s += "`hasExp`=" + to_string(hasExp ? 1 : 0) + ",";
     s += "`langCommand`=" + to_string(this->getLangCode()) + ",";
-	s += "`availTime`='" + this->toTimeStr() + "'";
+	s += "`availTime`='" + this->toTimeStr() + "',";
+    s += "`passwd`='" + this->passwd + "' ";
     s+="where id="+to_string(this->id);
     return string();
 }
@@ -101,12 +103,12 @@ string Volunteer::updateSql()
 int Volunteer::getLangCode()
 {
     int value = 0;
-    for (int i = LANG_NUM - 1; i > 0; i--)
+    for(int i = 0; i <LANG_NUM-1; i++)
     {
         value += this->langCommand[i] ? 1 : 0;
         value <<= 1;
     }
-    value += this->langCommand[0];
+    value += this->langCommand[LANG_NUM-1];
     return value;
 }
 

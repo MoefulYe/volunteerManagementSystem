@@ -58,6 +58,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <ObjectFileName>$(IntDir)$(IntDir)%(RelativeDir)</ObjectFileName>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;$;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -95,35 +102,38 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="util.h" />
+    <ClCompile Include="gui\loginUI\loginui.cpp" />
+    <ClCompile Include="gui\SignUp\signup.cpp" />
+    <ClCompile Include="sqlite3\shell.c" />
+    <ClCompile Include="sqlite3\sqlite3.c" />
+    <ClCompile Include="sql\sql.cpp" />
+    <ClCompile Include="util\util.cpp" />
+    <ClInclude Include="stdafx.h" />
+    <QtMoc Include="gui\loginUI\loginui.h" />
+    <QtMoc Include="gui\SignUp\signup.h" />
+    <ClInclude Include="sqlite3\sqlite3.h" />
+    <ClInclude Include="sqlite3\sqlite3ext.h" />
+    <ClInclude Include="sql\sql.h" />
+    <ClInclude Include="util\util.h" />
     <QtRcc Include="volunteermanagementsystem.qrc" />
-    <QtUic Include="volunteermanagementsystem.ui" />
-    <QtMoc Include="volunteermanagementsystem.h" />
-    <ClCompile Include="core.cpp" />
-    <ClCompile Include="sql.cpp" />
-    <ClCompile Include="sqlite3.c" />
-    <ClCompile Include="util.cpp" />
-    <ClCompile Include="volunteermanagementsystem.cpp" />
+    <ClCompile Include="core\core.cpp" />
     <ClCompile Include="main.cpp" />
     <None Include="README.md" />
-    <None Include="sqlite3.def" />
-    <None Include="sqlite3.dll" />
-    <None Include="sqlite3.exp" />
+    <None Include="sqlite3\sqlite3.def" />
+    <None Include="sqlite3\sqlite3.dll" />
+    <None Include="sqlite3\sqlite3.exp" />
     <None Include="volunteer.db" />
     <None Include="volunteerManagementSystem.ico" />
     <ResourceCompile Include="volunteerManagementSystem.rc" />
-    <ClInclude Include="core.h" />
-    <ClInclude Include="sql.h" />
-    <ClInclude Include="sqlite3.h" />
-    <ClInclude Include="sqlite3ext.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClInclude Include="core\core.h" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="sqlite3.lib" />
+    <Library Include="sqlite3\sqlite3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="DialogButtonBottom.ui" />
+    <QtUic Include="gui\loginUI\loginui.ui" />
+    <QtUic Include="gui\SignUp\signup.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

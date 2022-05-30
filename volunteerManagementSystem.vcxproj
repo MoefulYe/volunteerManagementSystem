@@ -104,10 +104,12 @@
   <ItemGroup>
     <ClCompile Include="gui\loginUI\loginui.cpp" />
     <ClCompile Include="gui\SignUp\signup.cpp" />
+    <ClCompile Include="gui\User\user.cpp" />
     <ClCompile Include="sqlite3\shell.c" />
     <ClCompile Include="sqlite3\sqlite3.c" />
     <ClCompile Include="sql\sql.cpp" />
     <ClCompile Include="util\util.cpp" />
+    <QtMoc Include="gui\User\user.h" />
     <ClInclude Include="stdafx.h" />
     <QtMoc Include="gui\loginUI\loginui.h" />
     <QtMoc Include="gui\SignUp\signup.h" />
@@ -134,6 +136,7 @@
     <QtUic Include="DialogButtonBottom.ui" />
     <QtUic Include="gui\loginUI\loginui.ui" />
     <QtUic Include="gui\SignUp\signup.ui" />
+    <QtUic Include="gui\User\user.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

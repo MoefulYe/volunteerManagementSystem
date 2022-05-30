@@ -3,6 +3,7 @@
 #include "../gui/SignUp/signup.h"
 #include "../core/core.h"
 #include "../sql/sql.h"
+#include "../gui/User/user.h"
 #include<QMessageBox>
 
 loginUI::loginUI(QWidget *parent) :
@@ -31,7 +32,8 @@ void loginUI::on_signinButton_clicked()
 	{
 		if(v.telephone == username && v.passwd == password)
 		{
-			QMessageBox::information(this,"now login as volunteer", "Login Success!");
+            user* u = new user(v);
+            u->show();
 			return;
 		}
 	}

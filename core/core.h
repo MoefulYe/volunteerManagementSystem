@@ -65,11 +65,11 @@ public:
 	string passwd;
 	int result[MAX_ATTEND_EVENT];
 	bool available(Event& e);
-	vector<string> deleteSql();
 	string insertSql();
+	string deleteSql();
 	string updateSql();
-private:
 	string  toTimeStr();
+private:
 	int getLangCode();
 };
 #define  VtrVec vector<Volunteer> 

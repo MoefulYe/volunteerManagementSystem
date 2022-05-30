@@ -56,15 +56,15 @@ string Volunteer::toTimeStr()
     s += to_string(this->availTime[DAYS_NUM-1][0]) + "-" + to_string(this->availTime[DAYS_NUM-1][1]);
 	return s;
 }
-vector<string> Volunteer::deleteSql()
+string Volunteer::deleteSql()
 {
-	vector<string> vs;
-    char buffer1[50],buffer2[50];
+    char buffer1[80],buffer2[80];
 	sprintf(buffer1, "delete from Event_Vtrs where vtrId=%d;", this->id);
-	vs.push_back(buffer1);
 	sprintf(buffer2, "delete from Volunteer where id=%d;", this->id);
-	vs.push_back(buffer2);
-	return vs;
+	string s = buffer1;
+    s += ";";
+	s += buffer2;
+    return s;
 }
 string Volunteer::insertSql()
 {
@@ -97,7 +97,7 @@ string Volunteer::updateSql()
 	s += "`availTime`='" + this->toTimeStr() + "',";
     s += "`passwd`='" + this->passwd + "' ";
     s+="where id="+to_string(this->id);
-    return string();
+    return  s;
 }
 
 int Volunteer::getLangCode()

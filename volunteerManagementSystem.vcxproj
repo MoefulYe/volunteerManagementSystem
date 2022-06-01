@@ -102,14 +102,18 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gui\Admin\admin.cpp" />
     <ClCompile Include="gui\loginUI\loginui.cpp" />
     <ClCompile Include="gui\SignUp\signup.cpp" />
+    <ClCompile Include="gui\Update\update.cpp" />
     <ClCompile Include="gui\User\user.cpp" />
     <ClCompile Include="sqlite3\shell.c" />
     <ClCompile Include="sqlite3\sqlite3.c" />
     <ClCompile Include="sql\sql.cpp" />
     <ClCompile Include="util\util.cpp" />
+    <QtMoc Include="gui\Admin\admin.h" />
     <QtMoc Include="gui\User\user.h" />
+    <QtMoc Include="gui\Update\update.h" />
     <ClInclude Include="stdafx.h" />
     <QtMoc Include="gui\loginUI\loginui.h" />
     <QtMoc Include="gui\SignUp\signup.h" />
@@ -134,8 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="DialogButtonBottom.ui" />
+    <QtUic Include="gui\Admin\admin.ui" />
     <QtUic Include="gui\loginUI\loginui.ui" />
     <QtUic Include="gui\SignUp\signup.ui" />
+    <QtUic Include="gui\Update\update.ui" />
     <QtUic Include="gui\User\user.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

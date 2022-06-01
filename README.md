@@ -148,3 +148,80 @@ public:
 	string toUpdateSql();
 };
 ```
+
+```
+├───core
+├───gui
+│   ├───loginUI
+│   ├───SignUp
+│   └───User
+├───sql
+├───sqlite3
+├───util
+└───x64
+    ├───Debug
+    │   ├───moc
+    │   ├───qmake
+    │   │   └───temp
+    │   ├───rcc
+    │   ├───uic
+    │   ├───voluntee.B6E483EC.tlog
+    │   └───x64
+    │       └───Debug
+    │           ├───core
+    │           ├───gui
+    │           │   ├───loginUI
+    │           │   └───SignUp
+    │           ├───sql
+    │           ├───sqlite3
+    │           └───util
+    └───Release
+        ├───moc
+        ├───qmake
+        │   └───temp
+        ├───rcc
+        └───uic
+PS E:\project\volunteerManagementSystem> wsl
+Hello,MoefulYe
+➜  volunteerManagementSystem git:(master) ✗ tree
+.
+|-- DialogButtonBottom.ui
+|-- LICENSE.txt
+|-- README.md
+|-- core
+|   |-- core.cpp
+|   `-- core.h
+|-- gui
+|   |-- SignUp
+|   |   |-- signup.cpp
+|   |   |-- signup.h
+|   |   `-- signup.ui
+|   |-- User
+|   |   |-- user.cpp
+|   |   |-- user.h
+|   |   `-- user.ui
+|   `-- loginUI
+|       |-- loginui.cpp
+|       |-- loginui.h
+|       `-- loginui.ui
+|-- main.cpp
+|-- sql
+|   |-- sql.cpp
+|   `-- sql.h
+|-- sqlite3
+|   |-- shell.c
+|   |-- sql.cpp
+|   |-- sqlite3.c
+|   |-- sqlite3.def
+|   |-- sqlite3.dll
+|   |-- sqlite3.exp
+|   |-- sqlite3.h
+|   |-- sqlite3.lib
+|   `-- sqlite3ext.h
+
+|-- util
+    |-- util.cpp
+    `-- util.h
+
+```
+

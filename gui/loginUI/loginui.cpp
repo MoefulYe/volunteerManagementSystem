@@ -5,6 +5,7 @@
 #include "../sql/sql.h"
 #include "../gui/User/user.h"
 #include<QMessageBox>
+#include"../gui/Admin/admin.h"
 
 loginUI::loginUI(QWidget *parent) :
     QMainWindow(parent),
@@ -25,7 +26,8 @@ void loginUI::on_signinButton_clicked()
 	string password = this->ui->lineEditPasswd->text().toStdString();
     if (username == "root" && password == "123456")
     {
-		QMessageBox::information(this, "now Login as root", "Login Success!");
+        Admin* a = new Admin(vv);
+		a->show();
         return;
     }
 	for(Volunteer v : vv)

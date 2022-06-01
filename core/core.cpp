@@ -1,6 +1,7 @@
 #include "core.h"
 #include<string>
 using namespace std;
+
 int Time::duration()
 {
     return this->end - this->start;
@@ -41,10 +42,10 @@ bool Event::collapse(Event& e)
     return this->time.collapse(e.time);
 }
 
-bool Volunteer::available(Event& e) 
+bool Volunteer::available(Time& t) 
 {
-    int day = e.time.day;
-    return this->availTime[day][0]<e.time.start && this->availTime[day][1]>e.time.end;
+    int day = t.day;
+    return this->availTime[day][0]<t.start && this->availTime[day][1]>t.end;
 }
 string Volunteer::toTimeStr()
 {
@@ -55,6 +56,15 @@ string Volunteer::toTimeStr()
 	}
     s += to_string(this->availTime[DAYS_NUM-1][0]) + "-" + to_string(this->availTime[DAYS_NUM-1][1]);
 	return s;
+}
+string Volunteer::toLangsStr()
+{
+    string s = "";
+    for (int i = 0; i < LANG_NUM; i++)
+    {
+        if (this->langCommand[i])s += LANG_NAMES[i];
+    }
+    return s;
 }
 string Volunteer::deleteSql()
 {
@@ -112,3 +122,11 @@ int Volunteer::getLangCode()
     return value;
 }
 
+Filter::Filter(string keyword, bool gender[2], bool hasExp, bool commandLang[LANG_NUM], string time)
+{
+}
+
+VtrVec Filter::filter(VtrVec vv)
+{
+    return VtrVec();
+}

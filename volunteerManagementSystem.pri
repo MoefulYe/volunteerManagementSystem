@@ -7,21 +7,28 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./sql/sql.h \
+HEADERS += ./stdafx.h \
+    ./sql/sql.h \
     ./util/util.h \
     ./core/core.h \
+    ./gui/User/user.h \
+    ./gui/Root/root.h \
     ./gui/loginUI/loginui.h \
     ./gui/SignUp/signup.h \
     ./sqlite3/sqlite3.h \
     ./sqlite3/sqlite3ext.h
 SOURCES += ./gui/loginUI/loginui.cpp \
+    ./gui/Root/root.cpp \
     ./gui/SignUp/signup.cpp \
+    ./gui/User/user.cpp \
     ./sql/sql.cpp \
     ./util/util.cpp \
     ./core/core.cpp \
     ./main.cpp \
     ./sqlite3/shell.c \
     ./sqlite3/sqlite3.c
-FORMS += ./gui/loginUI/loginui.ui \
-    ./gui/SignUp/signup.ui
+FORMS += ./DialogButtonBottom.ui \
+    ./gui/loginUI/loginui.ui \
+    ./gui/SignUp/signup.ui \
+    ./gui/User/user.ui
 RESOURCES += volunteermanagementsystem.qrc

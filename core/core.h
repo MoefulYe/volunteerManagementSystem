@@ -8,6 +8,9 @@ constexpr auto LANG_NUM = 6;
 constexpr auto MAX_NEEDED_VTRS = 10;
 constexpr auto MAX_ATTEND_EVENT = 10;
 constexpr auto DAYS_NUM = 5;
+
+const string  LANG_NAMES[LANG_NUM] = { "英", "汉", "日", "韩", "印", "俄" };
+
 enum lang_set
 {
 	english,
@@ -64,15 +67,30 @@ public:
 	int availTime[DAYS_NUM][2];
 	string passwd;
 	int result[MAX_ATTEND_EVENT];
-	bool available(Event& e);
+	bool available(Time& e);
 	string insertSql();
 	string deleteSql();
 	string updateSql();
 	string  toTimeStr();
+	string toLangsStr();
 private:
 	int getLangCode();
 };
-#define  VtrVec vector<Volunteer> 
+
+#define  VtrVec vector<Volunteer>
+class Filter 
+{
+public:
+	Filter(string keyword,bool gender[2],bool hasExp,bool commandLang[LANG_NUM],string time);
+	VtrVec filter(VtrVec vv);
+private:
+	string keyword;
+	bool gender[2];
+	bool hasExp;
+	bool commandLang[LANG_NUM];
+	Time time;
+};
+ 
 #endif // !CORE_INCLUDED
 
 

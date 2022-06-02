@@ -275,7 +275,20 @@
     </rect>
    </property>
    <property name="text">
-    <string>确认</string>
+    <string>确认修改</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>880</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>删除记录</string>
    </property>
   </widget>
  </widget>

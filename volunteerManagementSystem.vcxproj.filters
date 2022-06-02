@@ -73,6 +73,9 @@
     <ClCompile Include="gui\Update\update.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gui\Insert\insert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
@@ -135,6 +138,9 @@
     <QtUic Include="gui\Update\update.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="gui\Insert\insert.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="gui\loginUI\loginui.h">
@@ -150,6 +156,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="gui\Update\update.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="gui\Insert\insert.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

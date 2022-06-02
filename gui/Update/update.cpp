@@ -4,15 +4,16 @@
 #include<QMessageBox>
 #include"../util/util.h"
 
-Update::Update(Admin *a,Volunteer v,QWidget *parent) :
+Update::Update(Admin *admin,VtrVec *vv,int index,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Update)
 {
     ui->setupUi(this);
-    this->admin = a;
-    this->v = v;
-	this->ui->LineEditName->setText(QString::fromStdString(v.name));
-	if (v.gender == "M")
+	this->vv = vv;
+	this->index = index;
+	this->admin = admin;
+	this->ui->LineEditName->setText(QString::fromStdString(vv->at(index).name));
+	if (vv->at(index).gender == "M")
 	{
 		this->ui->radioButton->setChecked(true);
 	}
@@ -20,19 +21,19 @@ Update::Update(Admin *a,Volunteer v,QWidget *parent) :
 	{
 		this->ui->radioButton_2->setChecked(true);
 	}
-    this->ui->LineEditAge->setText(QString::fromStdString(to_string(this->v.age)));
-    this->ui->LineEditTelephone->setText(QString::fromStdString(this->v.telephone));
-    this->ui->textEdit->setPlainText(QString::fromStdString(this->v.profile));
-    this->ui->CheckBox->setChecked(this->v.hasExp);
-    this->ui->LineEditIdCard->setText(QString::fromStdString(this->v.idCard));
-    this->ui->radioButton_3->setChecked(this->v.langCommand[english]);
-    this->ui->radioButton_4->setChecked(this->v.langCommand[chinese]);
-    this->ui->radioButton_5->setChecked(this->v.langCommand[japanese]);
-    this->ui->radioButton_6->setChecked(this->v.langCommand[korean]);
-    this->ui->radioButton_7->setChecked(this->v.langCommand[india]);
-    this->ui->radioButton_8->setChecked(this->v.langCommand[russia]);
-    this->ui->LineEdit->setText(QString::fromStdString(v.toTimeStr()));
-    this->ui->LineEdit_2->setText(QString::fromStdString(v.passwd));
+    this->ui->LineEditAge->setText(QString::fromStdString(to_string(this->vv->at(index).age)));
+    this->ui->LineEditTelephone->setText(QString::fromStdString(this->vv->at(index).telephone));
+    this->ui->textEdit->setPlainText(QString::fromStdString(this->vv->at(index).profile));
+    this->ui->CheckBox->setChecked(this->vv->at(index).hasExp);
+    this->ui->LineEditIdCard->setText(QString::fromStdString(this->vv->at(index).idCard));
+    this->ui->radioButton_3->setChecked(this->vv->at(index).langCommand[english]);
+    this->ui->radioButton_4->setChecked(this->vv->at(index).langCommand[chinese]);
+    this->ui->radioButton_5->setChecked(this->vv->at(index).langCommand[japanese]);
+    this->ui->radioButton_6->setChecked(this->vv->at(index).langCommand[korean]);
+    this->ui->radioButton_7->setChecked(this->vv->at(index).langCommand[india]);
+    this->ui->radioButton_8->setChecked(this->vv->at(index).langCommand[russia]);
+    this->ui->LineEdit->setText(QString::fromStdString(vv->at(index).toTimeStr()));
+    this->ui->LineEdit_2->setText(QString::fromStdString(vv->at(index).passwd));
 }
 
 Update::~Update()
@@ -45,7 +46,7 @@ void Update::on_pushButton_clicked()
 	QMessageBox::StandardButton result = QMessageBox::information(NULL, "提示信息", "确定要修改信息吗", QMessageBox::Yes | QMessageBox::No);
 	if (result == QMessageBox::No)return;
 	Volunteer v;
-	v.id = this->v.id;
+	v.id = this->vv->at(index).id;
 	string name = this->ui->LineEditName->text().toStdString();
 	if (name == "")
 	{
@@ -146,12 +147,23 @@ void Update::on_pushButton_clicked()
 
 	}
 	string update = v.updateSql();
-	sqlOperator(update);
-	QMessageBox::information(this, "Success", "修改成功！");
+	(*vv)[this->index] = v;
+	QMessageBox::information(this, "提示", "修改成功！");
+	this->admin->flushVtrTable();
+	this->admin->addToSqls(update);
 	this->close();
 }
 
 void Update::on_pushButton_2_clicked()
 {
     this->close();
+}
+
+void Update::on_pushButton_3_clicked()
+{
+	string del = this->vv->at(index).deleteSql();
+	this->vv->erase(this->vv->begin() + index);
+	this->admin->flushVtrTable();
+	this->admin->addToSqls(del);
+	this->close();
 }

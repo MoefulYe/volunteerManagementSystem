@@ -23,6 +23,8 @@ enum lang_set
 class Time 
 {
 public:
+	Time();
+	Time(int day, int start, int end);
 	int day;
 	//开始和结束的小时
 	int start, end;
@@ -81,14 +83,19 @@ private:
 class Filter 
 {
 public:
-	Filter(string keyword,bool gender[2],bool hasExp,bool commandLang[LANG_NUM],string time);
-	VtrVec filter(VtrVec vv);
+	Filter();
+	vector<int> filter(VtrVec vv);
+	void setTime(string time);
+	void setLang(bool langs[LANG_NUM]);
+	void setKeyword(string keyword);
+	void setGender(bool gender[2]);
 private:
 	string keyword;
 	bool gender[2];
 	bool hasExp;
 	bool commandLang[LANG_NUM];
 	Time time;
+	bool isMet(Volunteer& vtr);
 };
  
 #endif // !CORE_INCLUDED

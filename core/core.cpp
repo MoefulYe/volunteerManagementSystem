@@ -1,6 +1,19 @@
 #include "core.h"
 #include<string>
+#include"../util/util.h"
+
 using namespace std;
+
+Time::Time()
+{
+}
+
+Time::Time(int day,int start,int end)
+{
+    this->day = day;
+	this->start = start;
+	this->end = end;
+}
 
 int Time::duration()
 {
@@ -122,11 +135,84 @@ int Volunteer::getLangCode()
     return value;
 }
 
-Filter::Filter(string keyword, bool gender[2], bool hasExp, bool commandLang[LANG_NUM], string time)
+
+Filter::Filter()
 {
+    this->keyword = "";
+    this->gender[0] = true;
+    this->gender[1] = true;
+    this->hasExp = false;
+    this->commandLang[english] = false;
+    this->commandLang[chinese] = false;
+    this->commandLang[japanese] = false;
+    this->commandLang[korean] = false;
+    this->commandLang[india] = false;
+    this->commandLang[russia] = false;
+    this->time = Time(-1, 0, 0);
+	
 }
 
-VtrVec Filter::filter(VtrVec vv)
+vector<int> Filter::filter(VtrVec vv)
 {
-    return VtrVec();
+    vector<int> v;
+    for (int i = 0; i < vv.size(); i++)
+    {
+		if(this->isMet(vv[i]))
+        {
+			v.push_back(i);
+        }
+    }
+	return v;
+}
+
+void Filter::setTime(string time)
+{
+	vector<string> v = split(time, ",");
+    int day = stoi(v[0]);
+	int start = stoi(v[1]);
+	int end = stoi(v[2]);
+	this->time = Time(day, start, end);
+}
+
+void Filter::setLang(bool langs[LANG_NUM])
+{
+    for (int i = 0; i < LANG_NUM; i++)
+    {
+        this->commandLang[i] = langs[i];
+    }
+}
+
+void Filter::setKeyword(string keyword)
+{
+    this->keyword = keyword;
+}
+
+void Filter::setGender(bool gender[2])
+{
+    this->gender[0] = gender[0];
+    this->gender[1] = gender[1];
+}
+
+bool Filter::isMet(Volunteer& vtr)
+{
+    if (vtr.name.find(this->keyword) == -1)
+    {
+        return false;
+    }
+    if (!(this->gender[0] && vtr.gender == "M" || this->gender[1] && vtr.gender == "F"))
+    {
+        return false;
+    }
+    for (int i = 0; i < LANG_NUM; i++)
+    {
+		if(this->commandLang[i]&&!vtr.langCommand[i])
+        {
+            return false;
+        }
+    }
+	if(this->time.day!=-1&&vtr.available(time))
+    {
+
+    }
+    return true;
 }

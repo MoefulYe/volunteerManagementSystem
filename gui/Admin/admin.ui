@@ -60,7 +60,7 @@
       </column>
       <column>
        <property name="text">
-        <string>姓名</string>
+        <string>名字</string>
        </property>
       </column>
       <column>
@@ -172,7 +172,7 @@
         <x>20</x>
         <y>70</y>
         <width>331</width>
-        <height>651</height>
+        <height>531</height>
        </rect>
       </property>
       <property name="title">
@@ -226,8 +226,8 @@
       <widget class="QPushButton" name="filter">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>570</y>
+         <x>50</x>
+         <y>490</y>
          <width>231</width>
          <height>23</height>
         </rect>
@@ -375,7 +375,7 @@
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>530</y>
+         <y>450</y>
          <width>281</width>
          <height>20</height>
         </rect>
@@ -384,6 +384,19 @@
         <string>要求有空的时间，格式为d,s,e</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>660</y>
+        <width>231</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>同步到数据库</string>
+      </property>
      </widget>
     </widget>
    </widget>

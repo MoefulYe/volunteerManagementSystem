@@ -16,17 +16,28 @@ public:
     explicit Admin(QWidget *parent = nullptr);
 	Admin(VtrVec vv,QWidget *parent = nullptr);
     ~Admin();
-
+    void addToSqls(string sql);
+public slots:
+    void flushVtrTable();
+	
 private slots:
-        void on_vtrTable_cellDoubleClicked(int row, int column);
+    void on_vtrTable_cellDoubleClicked(int row, int column);
+
+    void on_pushButton_clicked();
+
+    void on_filter_clicked();
+
+    void on_insertBtn_clicked();
 
 private:
     Ui::Admin *ui;
-    //Filter f;
+    Filter f;
+    vector<string> sqls;
 	VtrVec vv;
-    VtrVec visible;
+    vector<int> visible;
     EventVec ev;
-    void flushTable();
+    void flushEventTable();
+    void syncToDB();
 };
 
 #endif // ADMIN_H

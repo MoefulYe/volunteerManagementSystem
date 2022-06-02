@@ -103,6 +103,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gui\Admin\admin.cpp" />
+    <ClCompile Include="gui\Insert\insert.cpp" />
     <ClCompile Include="gui\loginUI\loginui.cpp" />
     <ClCompile Include="gui\SignUp\signup.cpp" />
     <ClCompile Include="gui\Update\update.cpp" />
@@ -114,6 +115,7 @@
     <QtMoc Include="gui\Admin\admin.h" />
     <QtMoc Include="gui\User\user.h" />
     <QtMoc Include="gui\Update\update.h" />
+    <QtMoc Include="gui\Insert\insert.h" />
     <ClInclude Include="stdafx.h" />
     <QtMoc Include="gui\loginUI\loginui.h" />
     <QtMoc Include="gui\SignUp\signup.h" />
@@ -139,6 +141,7 @@
   <ItemGroup>
     <QtUic Include="DialogButtonBottom.ui" />
     <QtUic Include="gui\Admin\admin.ui" />
+    <QtUic Include="gui\Insert\insert.ui" />
     <QtUic Include="gui\loginUI\loginui.ui" />
     <QtUic Include="gui\SignUp\signup.ui" />
     <QtUic Include="gui\Update\update.ui" />

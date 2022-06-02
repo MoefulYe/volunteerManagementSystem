@@ -13,7 +13,7 @@ class Update : public QWidget
     Q_OBJECT
 
 public:
-    explicit Update(Admin *a,Volunteer v,QWidget *parent = nullptr);
+    explicit Update(Admin *a,VtrVec *vv,int index, QWidget* parent = nullptr);
     ~Update();
 
 private slots:
@@ -21,10 +21,13 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Update *ui;
 	Admin *admin;
-    Volunteer v;
+    VtrVec* vv;
+    int index;
 };
 
 #endif // UPDATE_H

@@ -275,7 +275,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>确认</string>
+    <string>添加</string>
    </property>
   </widget>
  </widget>

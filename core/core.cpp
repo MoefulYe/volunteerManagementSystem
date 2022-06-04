@@ -50,12 +50,102 @@ bool Time::collapse(Time& t)
     }
 }
 
+
 bool Event::collapse(Event& e)
 {
     return this->time.collapse(e.time);
 }
 
-bool Volunteer::available(Time& t) 
+vector<int> Event::vtrs_may_attend(VtrVec *vv,vector<int> *sortedVtrs)
+{
+    vector<int> result;
+    int i = 0;
+    for (int i : *sortedVtrs)
+    {
+        if (vv->at(i).available(this->time))
+        {
+			result.push_back(i);
+        }
+    }
+    return result;
+}
+
+void combination(vector<int> *src,vector<vector<int>> *result,vector<int> tmp, int num, int index)
+{
+    if (num == 0)
+    {
+		result->push_back(tmp);
+		return;
+    }
+    else if (index == src->size())
+    {
+		return;
+    }
+    else
+    {
+        combination(src, result, tmp, num, index + 1);
+        tmp.push_back(src->at(index));
+		combination(src, result, tmp, num - 1, index + 1);
+    }
+}
+
+vector<vector<int>> Event::getAllPossibilities(VtrVec *vv,vector<int> *sortedVtrs)
+{
+	vector<vector<int>> result;
+    vector<int> mayAttend = this->vtrs_may_attend(vv,sortedVtrs);
+    if (mayAttend.size() < this->needVtrsNum)return result;
+	int size = mayAttend.size();
+	combination(&mayAttend,&result,vector<int>(), this->needVtrsNum, 0);
+    int i = 0;
+    for (vector<int> possibility : result)
+	{
+        bool flag[LANG_NUM];
+		for (int i = 0; i < LANG_NUM; i++)
+		{
+			flag[i] = false;
+		}
+        for (int i : possibility)
+        {
+            for(int i=0; i < LANG_NUM; i++)
+			{
+                flag[i] == flag[i] || vv->at(i).langCommand[i];
+			}
+        }
+		for(int i=0;i<LANG_NUM;i++)
+        {
+            if (!flag[i] && this->neededLangs[i])
+            {
+                result.erase(result.begin() + i);
+            }
+        }
+        i++;
+	}
+	return result;
+}
+
+bool Event::islangMet(PVtrVec pvv)
+{
+    bool tmp[LANG_NUM];
+    for (int i = 0; i < LANG_NUM; i++)
+    {
+        tmp[i] = false;
+    }
+    for(Volunteer *pv:pvv)
+    {
+        for (int i = 0; i < LANG_NUM; i++)
+        {
+            tmp[i] =tmp[i] || pv->langCommand[i];
+        }
+    }
+    for (int i = 0; i < LANG_NUM; i++)
+    {
+        if (this->neededLangs[i] && !tmp[i])return false;
+    }
+    return true;
+}
+
+
+bool Volunteer::available(Time& t)
 {
     int day = t.day;
     return this->availTime[day][0]<t.start && this->availTime[day][1]>t.end;
@@ -215,4 +305,54 @@ bool Filter::isMet(Volunteer& vtr)
 
     }
     return true;
+}
+
+Scheme::Scheme(VtrVec* vv, EventVec* ev)
+{
+    this->ev = ev;
+    this->vv = vv;
+    this->sorted = sortByHasEXp(vv);
+    int i = 0;
+    for (auto e : *ev)
+    {
+        auto p = e.getAllPossibilities(this->vv, &this->sorted);
+        this->vecPos[i] = p;
+		i++;
+    }
+}
+
+void Scheme::decide()
+{
+	
+}
+
+void Scheme::output()
+{
+}
+
+void Scheme::syncToDB()
+{
+}
+
+vector<int> sortByHasEXp(VtrVec* vv)
+{
+	vector<int> result,tmp;
+    int i= 0;
+	while(i<vv->size())
+	{
+		if(vv->at(i).hasExp)
+		{
+			result.push_back(i);
+		}
+		else
+		{
+			tmp.push_back(i);
+		}
+		i++;
+	}
+	for(int i=0;i<tmp.size();i++)
+	{
+		result.push_back(tmp[i]);
+	}
+	return result;
 }

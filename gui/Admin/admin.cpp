@@ -75,9 +75,10 @@ void Admin::flushEventTable()
 
 void Admin::syncToDB()
 {
-    for (string sql : this->sqls)
+    if (this->sqls.size() == 0)return;
+    for (int i = 0; i < this->sqls.size(); i++)
     {
-        sqlOperator(sql);
+        sqlOperator(this->sqls[i]);
     }
 }
 

@@ -20,6 +20,16 @@ enum lang_set
 	india,
 	russia,
 };
+
+class Volunteer;
+class Event;
+#define  VtrVec vector<Volunteer>
+#define  PVtrVec vector<Volunteer*>
+#define EventVec vector<Event>
+class Scheme;
+class SubScheme;
+
+
 class Time 
 {
 public:
@@ -38,6 +48,7 @@ public:
 class Event
 {
 public:
+	Event();
 	int id;
 	string name;
 	Time time;
@@ -45,11 +56,15 @@ public:
 	int needVtrsNum;
 	int vtrs[MAX_NEEDED_VTRS];
 	bool collapse(Event& e);
+	vector<int> vtrs_may_attend(VtrVec* vv, vector<int>* sortedVtrs);
+	vector<vector<int>> getAllPossibilities(VtrVec* vv, vector<int>* sortedVtrs);
+	bool islangMet(PVtrVec pvv);
 };
 #define EventVec vector<Event> 
 class Volunteer 
 {
 public:
+	Volunteer();
 	int id;
 	string name;
 	string gender;
@@ -70,16 +85,17 @@ public:
 	string passwd;
 	int result[MAX_ATTEND_EVENT];
 	bool available(Time& e);
+	//bool available();
 	string insertSql();
 	string deleteSql();
 	string updateSql();
-	string  toTimeStr();
+	string toTimeStr();
 	string toLangsStr();
+	//int vtrHours();
 private:
 	int getLangCode();
 };
 
-#define  VtrVec vector<Volunteer>
 class Filter 
 {
 public:
@@ -97,7 +113,23 @@ private:
 	Time time;
 	bool isMet(Volunteer& vtr);
 };
- 
+
+#define Possibilities vector<vector<int>>
+#define Possibility vector<int>
+#define Answer vector<vector<int>>
+
+class Scheme {
+public:
+	Scheme(VtrVec* vv, EventVec* ev);
+	void decide();
+	void output();
+	void syncToDB();
+private:
+	VtrVec* vv;
+	EventVec* ev;
+	vector<int> sorted;
+	vector<Possibilities> vecPos;
+	Answer answer;
+}
+
 #endif // !CORE_INCLUDED
-
-

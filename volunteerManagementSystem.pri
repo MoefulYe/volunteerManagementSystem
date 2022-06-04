@@ -11,15 +11,19 @@ HEADERS += ./stdafx.h \
     ./sql/sql.h \
     ./util/util.h \
     ./core/core.h \
+    ./gui/Admin/admin.h \
     ./gui/User/user.h \
-    ./gui/Root/root.h \
+    ./gui/Update/update.h \
+    ./gui/Insert/insert.h \
     ./gui/loginUI/loginui.h \
     ./gui/SignUp/signup.h \
     ./sqlite3/sqlite3.h \
     ./sqlite3/sqlite3ext.h
-SOURCES += ./gui/loginUI/loginui.cpp \
-    ./gui/Root/root.cpp \
+SOURCES += ./gui/Admin/admin.cpp \
+    ./gui/Insert/insert.cpp \
+    ./gui/loginUI/loginui.cpp \
     ./gui/SignUp/signup.cpp \
+    ./gui/Update/update.cpp \
     ./gui/User/user.cpp \
     ./sql/sql.cpp \
     ./util/util.cpp \
@@ -28,7 +32,10 @@ SOURCES += ./gui/loginUI/loginui.cpp \
     ./sqlite3/shell.c \
     ./sqlite3/sqlite3.c
 FORMS += ./DialogButtonBottom.ui \
+    ./gui/Admin/admin.ui \
+    ./gui/Insert/insert.ui \
     ./gui/loginUI/loginui.ui \
     ./gui/SignUp/signup.ui \
+    ./gui/Update/update.ui \
     ./gui/User/user.ui
 RESOURCES += volunteermanagementsystem.qrc

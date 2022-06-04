@@ -91,6 +91,12 @@ EventVec getAllEvents()
 		e.time.start = sqlite3_column_int(stmt, 3);
 		e.time.end = sqlite3_column_int(stmt, 4);
 		e.needVtrsNum = sqlite3_column_int(stmt, 5);
+		int value = sqlite3_column_int(stmt, 6);
+		for (int i = 0; i < LANG_NUM; i++)
+		{
+			e.neededLangs[LANG_NUM-1-i] = value & 1 ? true : false;
+			value >>= 1;
+		}
 		string sql2="select vtrId from Event_Vtrs where eventId="+to_string(e.id);
 		sqlite3_stmt *stmt2;
 		rc = sqlite3_prepare_v2(db, sql2.c_str(), -1, &stmt2, NULL);

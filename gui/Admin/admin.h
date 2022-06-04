@@ -13,8 +13,7 @@ class Admin : public QWidget
     Q_OBJECT
 
 public:
-    explicit Admin(QWidget *parent = nullptr);
-	Admin(VtrVec vv,QWidget *parent = nullptr);
+    explicit Admin(VtrVec vv,QWidget *parent = nullptr);
     ~Admin();
     void addToSqls(string sql);
 public slots:
@@ -29,6 +28,16 @@ private slots:
 
     void on_insertBtn_clicked();
 
+    void on_scheme_clicked();
+
+    void on_decide_clicked();
+
+    void on_sync_clicked();
+
+    void on_exportCSV_clicked();
+
+    void on_tab_2_tabBarClicked(int index);
+
 private:
     Ui::Admin *ui;
     Filter f;
@@ -36,6 +45,7 @@ private:
 	VtrVec vv;
     vector<int> visible;
     EventVec ev;
+    Scheme sch;
     void flushEventTable();
     void syncToDB();
 };

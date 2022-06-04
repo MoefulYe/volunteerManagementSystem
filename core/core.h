@@ -4,13 +4,18 @@
 #include<string>
 #include<vector>
 using namespace std;
+//假定只有6种语言
 constexpr auto LANG_NUM = 6;
+//一个事程至多有10个志愿者
 constexpr auto MAX_NEEDED_VTRS = 10;
+//一个志愿者至多参加10个事程
 constexpr auto MAX_ATTEND_EVENT = 10;
+//假定有5天
 constexpr auto DAYS_NUM = 5;
-
+//int转语言
 const string  LANG_NAMES[LANG_NUM] = { "英", "汉", "日", "韩", "印", "俄" };
 
+//语言枚举
 enum lang_set
 {
 	english,
@@ -23,11 +28,16 @@ enum lang_set
 
 class Volunteer;
 class Event;
+class Scheme;
+//_Time可不连续，Time只记录一天内的一段连续时间，两者的粒度都是一小时
+class _Time;
+class Time;
 #define  VtrVec vector<Volunteer>
 #define  PVtrVec vector<Volunteer*>
 #define EventVec vector<Event>
-class Scheme;
-class SubScheme;
+#define Possibilities vector<vector<int>>
+#define Possibility vector<int>
+#define Answer vector<vector<int>>
 
 
 class Time 
@@ -40,15 +50,32 @@ public:
 	int start, end;
 	//持续了多少小时
 	int duration();
+	//转化为字符串
 	string toString();
+	//转化为字符串但不带日期
 	string toStringWithoutDay();
 	//判断时间是否冲突
 	bool collapse(Time& t);
 };
+
+class _Time
+{
+public:
+	_Time();
+	//从Time中构造_Time
+	_Time(const Time& T);
+	//重载+号，加上Time对应的时间
+	_Time operator+(const Time& t) const;
+	//重载*号，判断重合
+	bool operator*(const Time& t) const;
+private:
+	//内部用5个int表示
+	unsigned int day[DAYS_NUM];
+};
+
 class Event
 {
 public:
-	Event();
 	int id;
 	string name;
 	Time time;
@@ -64,7 +91,6 @@ public:
 class Volunteer 
 {
 public:
-	Volunteer();
 	int id;
 	string name;
 	string gender;
@@ -114,22 +140,26 @@ private:
 	bool isMet(Volunteer& vtr);
 };
 
-#define Possibilities vector<vector<int>>
-#define Possibility vector<int>
-#define Answer vector<vector<int>>
-
 class Scheme {
 public:
-	Scheme(VtrVec* vv, EventVec* ev);
+	Scheme();
+	Scheme(VtrVec vv, EventVec ev);
+	VtrVec vv;
+	EventVec ev;
+	bool hasAnswer;
 	void decide();
 	void output();
 	void syncToDB();
+	void exportAsCSV();
+	Answer answer;
 private:
-	VtrVec* vv;
-	EventVec* ev;
 	vector<int> sorted;
 	vector<Possibilities> vecPos;
-	Answer answer;
-}
+	void solve(vector<_Time> times, Answer answer, int index);
+};
+
+
+
+vector<int> sortByHasEXp(VtrVec* vv);
 
 #endif // !CORE_INCLUDED

@@ -1,6 +1,8 @@
 #include "core.h"
 #include<string>
 #include"../util/util.h"
+#include"../sql/sql.h"
+#include<stdlib.h>
 
 using namespace std;
 
@@ -116,6 +118,7 @@ vector<vector<int>> Event::getAllPossibilities(VtrVec *vv,vector<int> *sortedVtr
             if (!flag[i] && this->neededLangs[i])
             {
                 result.erase(result.begin() + i);
+				break;
             }
         }
         i++;
@@ -307,31 +310,109 @@ bool Filter::isMet(Volunteer& vtr)
     return true;
 }
 
-Scheme::Scheme(VtrVec* vv, EventVec* ev)
+Scheme::Scheme()
+{
+}
+
+Scheme::Scheme(VtrVec vv, EventVec ev)
 {
     this->ev = ev;
     this->vv = vv;
-    this->sorted = sortByHasEXp(vv);
-    int i = 0;
-    for (auto e : *ev)
+    this->sorted = sortByHasEXp(&vv);
+    for (auto e : ev)
     {
-        auto p = e.getAllPossibilities(this->vv, &this->sorted);
-        this->vecPos[i] = p;
-		i++;
+        auto p = e.getAllPossibilities(&this->vv, &this->sorted);
+        this->vecPos.push_back(p);
     }
+    this->hasAnswer = false;
+}
+
+void Scheme::solve(vector<_Time> times, Answer answer, int index)
+{
+    if (this->hasAnswer)return;
+    if (index == this->ev.size())
+    {
+        this->answer = answer;
+		this->hasAnswer = true;
+        return;
+    }
+	for (auto p : this->vecPos[index])
+	{
+		bool flag = true;
+		Answer a = answer;
+		a.push_back(p);
+		vector<_Time> t=times;
+		//是否有冲突
+		for(int i:p)
+        {
+            if (t[i] * this->ev.at(index).time)
+            {
+				flag = false;
+                break;
+            }
+            t[i] = t[i] + this->ev.at(index).time;
+        }
+		if(flag)
+		{
+			this->solve(t, a, index + 1);
+		}
+        else 
+        {
+		    continue;
+        }
+	}
 }
 
 void Scheme::decide()
 {
-	
+    this->hasAnswer = false;
+    vector<_Time> times;
+    int size = vv.size();
+	if(size!=0)
+    {
+        _Time time;
+        for (int i = 0; i < size; i++)
+        {
+            times.push_back(time);
+        }
+    }
+	Answer answer;
+    this->solve(times, answer, 0); 
 }
 
 void Scheme::output()
 {
+	
 }
 
 void Scheme::syncToDB()
 {
+    string sql = "delete from Event_Vtrs";
+    sqlOperator(sql);
+    for (int i = 0; i < this->ev.size(); i++)
+    {
+        for (int j : this->answer[i])
+        {
+            string sql = "insert into Event_Vtrs values (" + to_string(this->ev[i].id) + "," + to_string(this->vv[j].id) + ");";
+            sqlOperator(sql);
+        }
+    }
+}
+
+void Scheme::exportAsCSV()
+{
+    FILE *f=fopen("result.csv", "w");
+    fprintf(f, "事程名称,时间,志愿者\n");
+    for (int i = 0; i < this->ev.size(); i++)
+	{
+        string vtrs="";
+		for(auto i: this->answer[i])
+		{
+            vtrs += this->vv[i].name+" ";
+		}
+		fprintf(f, "%s,%s,%s\n", this->ev[i].name.c_str(),this->ev[i].time.toString().c_str(),vtrs.c_str());
+	}
+	fclose(f);
 }
 
 vector<int> sortByHasEXp(VtrVec* vv)
@@ -356,3 +437,49 @@ vector<int> sortByHasEXp(VtrVec* vv)
 	}
 	return result;
 }
+
+_Time::_Time()
+{
+    for (int i = 0; i < DAYS_NUM; i++)
+    {
+        this->day[i] = 0;
+    }
+}
+
+_Time::_Time(const Time &T)
+{
+    for (int i = 0; i < DAYS_NUM; i++)
+    {
+        this->day[i] = 0;
+    }
+    int day = T.day;
+    for (int i = T.start-1; i < T.end; i++)
+    {
+        this->day[day] |= (1 << i);
+    }
+}
+
+_Time _Time::operator+(const Time& t) const
+{
+    _Time t1 = _Time(t);
+    _Time result;
+	for (int i = 0; i < DAYS_NUM; i++)
+    {
+        result.day[i] = this->day[i] | t1.day[i];
+	}
+	return result;
+}
+
+bool _Time::operator*(const Time& t) const
+{
+    _Time t1 = _Time(t);
+    for(int i=0;i<DAYS_NUM;i++)
+	{
+		if(this->day[i]&t1.day[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+

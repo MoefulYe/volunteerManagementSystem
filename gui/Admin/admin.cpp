@@ -1,17 +1,12 @@
 #include "admin.h"
+#include <QtCharts> 
+QT_CHARTS_USE_NAMESPACE
 #include "ui_admin.h"
 #include "../sql/sql.h"
 #include <QTableWidgetItem>
 #include"../gui/Update/update.h"
 #include"../gui/Insert/insert.h"
 #include<QMessageBox>
-
-Admin::Admin(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Admin)
-{
-    ui->setupUi(this);
-}
 
 Admin::Admin(VtrVec vv, QWidget *parent) :
 	QWidget(parent),
@@ -24,6 +19,8 @@ Admin::Admin(VtrVec vv, QWidget *parent) :
     this->ev = getAllEvents();
     flushEventTable();
 	flushVtrTable();
+    this->ui->eventTable->setColumnWidth(2, 1000);
+    this->ui->tableWidget->setColumnWidth(2, 1500);
 }
 
 Admin::~Admin()
@@ -129,4 +126,60 @@ void Admin::on_insertBtn_clicked()
 {
     Insert *insert = new Insert(this,&this->vv);
 	insert->show();
+}
+
+void Admin::on_scheme_clicked()
+{
+    this->sch.decide();
+    if (!this->sch.hasAnswer)
+    {
+		QMessageBox::information(NULL, "info", "没有符合条件的组合");
+		return;
+    }
+    else
+    {
+        this->ui->tableWidget->clear();
+        this->ui->tableWidget->setRowCount(this->sch.ev.size());
+        int i = 0;
+        for (auto e : this->sch.ev)
+        {
+            this->ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(e.name)));
+            this->ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(e.time.toString())));
+            string vtrs = "";
+            for (auto i : this->sch.answer[i])
+            {
+                vtrs += this->sch.vv[i].name + " ";
+            }
+            this->ui->tableWidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(vtrs)));
+            i++;
+        }
+    }
+}
+
+void Admin::on_decide_clicked()
+{
+    this->vv = this->sch.vv;
+    this->ev = this->sch.ev;
+	this->flushVtrTable();
+	QMessageBox::information(NULL, "info", "确定成功");
+}
+
+void Admin::on_sync_clicked()
+{
+    this->sch.syncToDB();
+    QMessageBox::information(NULL, "info", "同步成功");
+}
+
+void Admin::on_exportCSV_clicked()
+{
+    this->sch.exportAsCSV();
+	QMessageBox::information(NULL, "info", "导出成功");
+}
+
+void Admin::on_tab_2_tabBarClicked(int index)
+{
+    if (index == 1) {
+        Scheme s(this->vv,this->ev);
+        this->sch = s;
+    }
 }

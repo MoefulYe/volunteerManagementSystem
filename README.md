@@ -62,7 +62,7 @@ flowchart LR
 ```
 
 
-## 3. 数据库设计
+### 数据库设计
 ```sqlite
 CREATE TABLE Volunteer(
     `id` INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -93,7 +93,7 @@ CREATE TABLE Event_Vtrs(
     FOREIGN KEY(vtrId) REFERENCES Volunteer(id)
 );
 ```
-
+### 志愿者和事程类设计
 ```c++
 class Event
 {

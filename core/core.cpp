@@ -3,7 +3,6 @@
 #include"../util/util.h"
 #include"../sql/sql.h"
 #include<stdlib.h>
-
 using namespace std;
 
 Time::Time()

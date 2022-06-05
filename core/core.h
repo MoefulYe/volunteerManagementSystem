@@ -73,6 +73,7 @@ private:
 	unsigned int day[DAYS_NUM];
 };
 
+//事程类
 class Event
 {
 public:
@@ -83,7 +84,9 @@ public:
 	int needVtrsNum;
 	int vtrs[MAX_NEEDED_VTRS];
 	bool collapse(Event& e);
+	//返回一个所有能参加的志愿者的索引数组
 	vector<int> vtrs_may_attend(VtrVec* vv, vector<int>* sortedVtrs);
+	//返回所有可能的组合
 	vector<vector<int>> getAllPossibilities(VtrVec* vv, vector<int>* sortedVtrs);
 	bool islangMet(PVtrVec pvv);
 };
@@ -122,6 +125,7 @@ private:
 	int getLangCode();
 };
 
+//过滤器类，实现筛选功能
 class Filter 
 {
 public:
@@ -140,6 +144,7 @@ private:
 	bool isMet(Volunteer& vtr);
 };
 
+//计划类用于决策
 class Scheme {
 public:
 	Scheme();

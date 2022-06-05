@@ -2,13 +2,39 @@
 
 ## 0.背景
 
-## 1.技术栈、使用工具
+第19届亚洲运动会将在杭州举行，为深入践行“绿色、智能、节俭、文明”的办会理念，广泛汇聚海内外各界人士的力量，共同举办一届具有“中国特色、浙江风采、杭州韵味、精彩纷呈”的体育文化盛会，组委会面向社会公开招募志愿者，由于志愿者队伍规模大、任务繁重，如何对志愿者进行科学、高效的管理成为了一个重要问题。
 
-技术栈 QT5  C++ sqlite3
+## 1.技术栈、工具链
 
-visual studio
+### 技术栈
 
-## 2.结构介绍
+ qt5 - C++/C - sqlite3
+
+- qt5 qt 是一个跨平台的 C++ 框架（C++库),我们用qt5实现对图形界面的编写
+- sqlite sqlite是一个轻量级的数据库，实现了自给自足的、无服务器的、零配置的、事务性的 SQL 数据库引擎。SQLite 是在世界上最广泛部署的 SQL 数据库引擎。
+
+### 工具链
+
+Visual Studio - Git - Qt Creator - Qt Designer
+
+- Visual Studio微软开发的IDE不多赘述
+- Git 一个分布式版本控制系统，实现小组任务的分工协作 项目仓库地址[https://github.com/MoefulYe/volunteerManagementSystem.git](https://github.com/MoefulYe/volunteerManagementSystem.git)
+- Qt Creator qt官方提供的一个IDE
+- Qt Designer 可视化编程，绘制界面ui文件，经过官方的工具编译后生成头文件，供项目使用后
+
+## 2.小组分工
+
+组长 叶 负责构思整个项目的框架，对sqlite官方提供的接口进行二次封装，编写图形界面
+
+蔡 编写项目的核心程序
+
+王 给组长打下手，编写用户界面
+
+邵 为组长打下手，编写root管理员界面
+
+胡 制作ppt和word
+
+## 3.结构介绍
 
 ```mermaid
 flowchart LR

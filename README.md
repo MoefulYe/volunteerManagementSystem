@@ -150,42 +150,7 @@ public:
 ```
 
 ```
-├───core
-├───gui
-│   ├───loginUI
-│   ├───SignUp
-│   └───User
-├───sql
-├───sqlite3
-├───util
-└───x64
-    ├───Debug
-    │   ├───moc
-    │   ├───qmake
-    │   │   └───temp
-    │   ├───rcc
-    │   ├───uic
-    │   ├───voluntee.B6E483EC.tlog
-    │   └───x64
-    │       └───Debug
-    │           ├───core
-    │           ├───gui
-    │           │   ├───loginUI
-    │           │   └───SignUp
-    │           ├───sql
-    │           ├───sqlite3
-    │           └───util
-    └───Release
-        ├───moc
-        ├───qmake
-        │   └───temp
-        ├───rcc
-        └───uic
-PS E:\project\volunteerManagementSystem> wsl
-Hello,MoefulYe
-➜  volunteerManagementSystem git:(master) ✗ tree
-.
-|-- DialogButtonBottom.ui
+
 |-- LICENSE.txt
 |-- README.md
 |-- core

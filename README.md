@@ -49,8 +49,6 @@ flowchart LR
 ```
 
 ```mermaid
-flowchart TB
-```mermaid
 flowchart LR
     id0(输入手机号)
     id1{数据库内是否有对应的记录}
@@ -71,8 +69,7 @@ flowchart LR
     id5-->志愿者界面
 ```
 
-```mermaid
-flowchart LR
+
 ```mermaid
 flowchart TB
     输入root-->id

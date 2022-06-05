@@ -74,18 +74,20 @@ CREATE TABLE Volunteer(
     `profile` CHAR(100) NOT NULL,
     `hasExp` TINYINT NOT NULL,
     `langCommand` TINYINT NOT  NULL,
-    `availTime` CHAR(100) NOT NULL
+    `availTime` CHAR(100) NOT NULL,
+    `passwd` CHAR(20) NOT NULL
 );
 CREATE TABLE Event(
-	`id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
     `name` CHAR(20) NOT NULL,
     `day` TINYINT NOT NULL,
     `start` TINYINT NOT NULL,
     `end` TINYINT NOT NULL,
-    `needVtrsNum` TINYINT NOT NULL
+    `needVtrsNum` TINYINT NOT NULL,
+    `needLang` TINYINT NOT NULL
 );
 CREATE TABLE Event_Vtrs(
-	`eventId` INTEGER,
+        `eventId` INTEGER,
     `vtrId` INTEGER,
     FOREIGN KEY(eventId) REFERENCES Event(id),
     FOREIGN KEY(vtrId) REFERENCES Volunteer(id)
@@ -93,24 +95,9 @@ CREATE TABLE Event_Vtrs(
 ```
 
 ```c++
-class Time 
-{
-public:
-	Time();
-	int day;
-	//开始和结束的小时
-	int start, end;
-	//持续了多少小时
-	int duration();
-	string toString();
-	string toStringWithoutDay();
-	//判断时间是否冲突
-	bool collapse(Time& t);
-};
 class Event
 {
 public:
-	Event();
 	int id;
 	string name;
 	Time time;
@@ -118,12 +105,15 @@ public:
 	int needVtrsNum;
 	int vtrs[MAX_NEEDED_VTRS];
 	bool collapse(Event& e);
+	//返回一个所有能参加的志愿者的索引数组
+	vector<int> vtrs_may_attend(VtrVec* vv, vector<int>* sortedVtrs);
+	//返回所有可能的组合
+	vector<vector<int>> getAllPossibilities(VtrVec* vv, vector<int>* sortedVtrs);
+	bool islangMet(PVtrVec pvv);
 };
-#define EventVec vector<Event> 
 class Volunteer 
 {
 public:
-	Volunteer();
 	int id;
 	string name;
 	string gender;
@@ -141,13 +131,22 @@ public:
 	//在数据库里以"8-22,9-22,10-22,...."五个连续以','分割的一对数值表示
 	//0-0表示当天没空
 	int availTime[DAYS_NUM][2];
+	string passwd;
 	int result[MAX_ATTEND_EVENT];
-	bool available(Event& e);
-	string toDeleteSql();
-	string toInsertSql();
-	string toUpdateSql();
+	bool available(Time& e);
+	//bool available();
+	string insertSql();
+	string deleteSql();
+	string updateSql();
+	string toTimeStr();
+	string toLangsStr();
+	//int vtrHours();
+private:
+	int getLangCode();
 };
+
 ```
+### 结构设计
 
 ```
 

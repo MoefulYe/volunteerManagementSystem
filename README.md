@@ -63,6 +63,13 @@ flowchart LR
 
 
 ### 数据库设计
+志愿者的语言掌握情况用一个int8表示，从数据库读取到程序时转化为一个布尔型的数组
+
+志愿者的可供的时间用一个字符串表示 如`0-0,8-22,8-22,8-12,0-0` 0-0表示当天没空我们认为运动会只举办5天，小型运动会
+
+event表存放事程信息
+
+Event_Vtrs表实现event表和volunteer表的关联，存放安排信息
 ```sqlite
 CREATE TABLE Volunteer(
     `id` INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -147,6 +154,7 @@ private:
 
 ```
 ### 结构设计
+下面是整个项目的结构
 
 ```
 
@@ -188,4 +196,39 @@ private:
     `-- util.h
 
 ```
+main.cpp是整个程序的入口，从此进入登录窗口
+
+sqlite3存放ssqlite3.h头文件和sqlite3库的实用的函数
+
+util存放一些程序开发时所得到的实用的函数如`vector<string> split(string s)` 等
+
+sql存放sql.cpp和sql.h对sqlite官方提供的接口进行二次封装，方便程序的开发
+
+core是项目的后端核心，定义了重要的类
+
+gui是项目的前端，存放了界面类，通过用户的交互，把数据交给后端代码，并最终显示到gui界面
+```mermaid
+flowchart LR
+	subgraph 数据库
+	volunteer
+	event
+	event_vtr
+	end
+	用户
+	gui
+	subgraph 后端
+	direction LR
+	sqlite
+	sql
+	util
+	core
+	end
+	sqlite<--交互-->数据库
+	sqlite--封装-->sql
+	util--工具-->core
+	sql--数据-->core
+	gui<--交互-->后端
+	用户<--交互-->gui
+```
+
 
